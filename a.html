@@ -1,0 +1,22 @@
+<html>
+
+<script>
+    function aa() {
+        //var jsondata = "{'a': '1', 'b': '2', 'c': '3', 'd': '4'}";
+        var d;
+        var jsontext = '{"a":[{"b":"11","c":"22"}],"firstname":"Jesper","surname":"Aaberg","phone":["555-0100","555-0120"]}';
+        var obj = JSON.parse(jsontext);
+        //alert(obj.firstname + obj.phone[0] + obj.a);
+        var obj1 = obj.a;
+        //alert(obj1[0].b);
+        var te = obj1[0].d = "33";
+        //alert(te);
+        //alert(jsontext);
+        var new_json = JSON.stringify(obj);
+        alert(new_json)
+
+    }
+</script>
+
+<input type="button" onclick="aa()" value="test">
+</html>

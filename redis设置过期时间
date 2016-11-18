@@ -1,0 +1,22 @@
+//redis 设置过期时间以及过期后删除，set(key,value,'EX',expried)如果在过期时间内重新给key赋值，那么设置的过期时间就会消失。
+public function actionTest() {
+        $redis = Yii::$app->redis_auth_email;
+        $resumeRedisKey = 'testhere';
+        if (!$redis->exists($resumeRedisKey)){
+            $redis->set($resumeRedisKey,0,"EX",60);
+            $redis->set($resumeRedisKey.'1',time(),'EX',60);
+        }
+        $nums = $redis->get($resumeRedisKey);
+        if ((time() - $redis->get($resumeRedisKey.'1')) < 60){
+            if ($nums < 2) {
+                $redis->set($resumeRedisKey,$nums+1);
+            }else{
+                $redis->del($resumeRedisKey);
+                $redis->del($resumeRedisKey.'1');
+            }
+        }else{
+            $redis->del($resumeRedisKey);
+            $redis->del($resumeRedisKey.'1');
+        }
+        exit;
+    }
